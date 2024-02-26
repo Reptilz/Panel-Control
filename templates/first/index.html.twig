@@ -1,0 +1,17 @@
+{% extends "template.html.twig" %}
+
+{% block title %}
+	{{ firstname }}
+	{{ name }}
+{% endblock %}
+
+{% block body %}
+	<div>
+		<p>Hello
+			{{ firstname }}
+			{{ name }}
+		</p>
+		Mon url absolue :
+		{{ url('first') }}
+	</div>
+{% endblock %}
