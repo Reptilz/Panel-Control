@@ -102,4 +102,27 @@ class PersonneController extends AbstractController
 
         return $this->redirectToRoute('personne.list.all');
     }
+
+
+    #[Route('/update/{id}/{name}/{firstname}/{age}', name: 'personne.update')]
+    public function updatePersonne(ManagerRegistry $doctrine, $id, $name, $firstname, $age): RedirectResponse
+    {
+        $repository = $doctrine->getRepository(Personne::class);
+        $personne = $repository->find($id);
+
+        if ($personne) {
+            $personne->setName($name);
+            $personne->setFirstname($firstname);
+            $personne->setAge($age);
+            $manager = $doctrine->getManager();
+            $manager->persist($personne);
+
+            $manager->flush();
+            $this->addFlash('success', "Personne updated successfully");
+        } else {
+            $this->addFlash('error', "Personne not found");
+        }
+
+        return $this->redirectToRoute('personne.list.all');
+    }
 }
