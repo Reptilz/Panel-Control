@@ -4,6 +4,10 @@
 	Liste des personnes
 {% endblock %}
 
+{% block titlePage %}
+	Liste des personnes
+{% endblock %}
+
 {% block body %}
 	<div class="row">
 		{% for personne in personnes %}
@@ -15,6 +19,7 @@
 					<p class="card-text">Age :
 						{{ personne.age }}</p>
 					<a href="{{ path('personne.detail', {id: personne.id}) }}" class="card-link">Détails</a>
+					<a href="{{ path('personne.delete', {id: personne.id}) }}" class="card-link">Delete</a>
 				</div>
 			</div>
 		{% endfor %}

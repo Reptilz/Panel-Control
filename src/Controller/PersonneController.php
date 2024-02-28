@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Personne;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -81,5 +82,24 @@ class PersonneController extends AbstractController
         return $this->render('personne/detail.html.twig', [
             'personne' => $personne,
         ]);
+    }
+
+
+    #[Route('/delete/{id}', name: 'personne.delete')]
+    public function deletePersonne(ManagerRegistry $doctrine, $id): RedirectResponse
+    {
+        $repository = $doctrine->getRepository(Personne::class);
+        $personne = $repository->find($id);
+
+        if ($personne) {
+            $manager = $doctrine->getManager();
+            $manager->remove($personne);
+            $manager->flush();
+            $this->addFlash('success', "Personne deleted successfully");
+        } else {
+            $this->addFlash('error', "Personne not found");
+        }
+
+        return $this->redirectToRoute('personne.list.all');
     }
 }
