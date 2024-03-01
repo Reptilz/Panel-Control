@@ -25,7 +25,7 @@
 		{% endfor %}
 	</div>
 
-	{% if isPaginated %}
+	{% if isPaginated is defined and isPaginated %}
 		<div class="row mt-2">
 			<nav aria-label="Page navigation example col">
 				<ul class="pagination">
